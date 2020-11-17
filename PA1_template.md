@@ -6,11 +6,10 @@ output:
 ---
 
 
-```{r setoptions, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
-```
 
-```{r firststep, message=FALSE}
+
+
+```r
 rm(list = ls())
 graphics.off()
 
@@ -27,14 +26,13 @@ package.check <- lapply( # load or install & load list of packages
   }
 ) 
 rm(packages, package.check)
-
 ```
 
 
 ## Loading and preprocessing the data
 
-```{r importdata}
 
+```r
 # if csv is still in .zip file first unzip iz
 if(!file.exists("activity.csv")){
   unzip(zipfile = "activity.zip")
@@ -46,7 +44,6 @@ df <- read.csv(file = "activity.csv", header = T)
 # data pre-processing
 df <- df %>% 
   mutate(date = ymd(date)) # convert date column to date class
-
 ```
 
 
@@ -55,13 +52,20 @@ df <- df %>%
 ## What is mean total number of steps taken per day?
 
 Mean of total number of steps taken per day:
-```{r totstepsavg}
+
+```r
 df %>% 
   group_by(date) %>% # calculate per day (total)
   summarise(`total steps per day` = sum(steps, na.rm = T)) %>% # total steps
   ungroup() %>% 
   summarise(`mean of total steps per day` = mean(`total steps per day`)) # mean of total steps per day
+```
 
+```
+## # A tibble: 1 x 1
+##   `mean of total steps per day`
+##                           <dbl>
+## 1                         9354.
 ```
 
 
